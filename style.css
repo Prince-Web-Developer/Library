@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  interpolate-size: allow-keywords;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1rem,0.8rem + 0.8vw,2rem);
+}
+
+
+body{
+    overflow-x: hidden;
+}
+
+
+
+
+
+/* error container styling */
+
+.error{
+    background-color: red;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    color: white;
+    width: 100%;
+    height: fit-content;
+}
+
+/* error container end */
+
+
+
+/* form styling */
+
+.form{
+    width: 100vw;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    padding: 20px;
+    max-width: 600px;
+    width: 80%;
+    border: 2px solid black;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+form h1{
+    text-align: center;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+}
+
+fieldset{
+    padding: 20px;
+}
+
+#rating{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+#rating input{
+    height: 30px;
+    max-width: 8ch;
+}
+
+label,.label{
+    font-weight: bold;
+}
+
+textarea{
+  height: 150px;  
+  resize  : none;
+  overflow: auto;
+}
+
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+input:hover, input:focus, textarea:hover, textarea:focus{
+    background-color: #eee;
+}
+
+fieldset:disabled{
+    color: gray;
+}
+
+input:disabled, textarea:disabled{
+    background-color: #eee;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+button[type="submit"]{
+    all: unset;
+    position: relative;
+    padding: 16px 32px;
+    transition: all 0.5s;
+    border: 2px solid black;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    overflow: hidden;
+}
+
+button[type="submit"]::after{
+    content: "";
+    position: absolute;
+    width: 140%;
+    z-index: -1;
+    transition: all 1s;
+    height: 120%;
+    background-color: black;
+    left: -10px;
+    bottom: -130%;
+}
+
+button[type="submit"]:hover{
+    color: white;
+}
+
+button[type="submit"]:hover::after{
+    bottom: 0%;
+}
+/* form end */

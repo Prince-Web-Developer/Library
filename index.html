@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="index.js" defer></script>
 </head>
+
 <body>
-    
+    <div class="error"></div>
+    <div class="form">
+        <form action="#" method="post">
+            <h1>Add Book</h1>
+            <p>All required fields are marked with *</p>
+
+            <div class="form-group">
+                <label for="title">title *</label>
+                <input type="text" id="title" required name="title">
+            </div>
+
+            <div class="form-group">
+                <label for="author">author *</label>
+                <input type="text" id="author" required name="author">
+            </div>
+
+            <div class="form-group">
+                <label for="pages">pages *</label>
+                <input type="number" id="pages" required name="pages">
+            </div>
+
+            <div class="checkbox">
+                <label for="read">read</label>
+                <input type="checkbox" name="read" id="read">
+            </div>
+
+            <fieldset disabled>
+                <legend>Reading Experience</legend>
+
+                <div class="form-group" id="rating">
+                    <input type="number" name="rating" id="rate" min="0" max="5">
+                    <p class="label">out of 5</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc">Tell more</label>
+                    <textarea name="reading-experience" id="desc"></textarea>
+                </div>
+            </fieldset>
+
+            <div class="submit">
+                <button type="submit">Add</button>
+            </div>
+        </form>
+    </div>
 </body>
+
 </html>
