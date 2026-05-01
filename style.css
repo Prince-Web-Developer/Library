@@ -89,6 +89,7 @@ label,.label{
 
 textarea{
   height: 150px;  
+  width: 100%;
   resize  : none;
   overflow: auto;
 }
