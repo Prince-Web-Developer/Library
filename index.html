@@ -16,7 +16,7 @@
 
 <body>
     <div class="error"></div>
-    <div class="form">
+    <div class="form" style="display: none;">
         <form action="#" id="addBook" method="post">
             <h1>Add Book</h1>
             <p>All required fields are marked with *</p>
@@ -46,7 +46,7 @@
 
                 <div class="form-group" id="rating">
                     <input type="number" name="rating" id="rate" min="0" max="5">
-                    <p class="label">out of 5</p>
+                    <label class="label" for="rate">out of 5</label>
                 </div>
 
                 <div class="form-group">
@@ -56,9 +56,34 @@
             </fieldset>
 
             <div class="submit">
-                <button type="submit">Add</button>
+                <button type="submit" aria-label="Add"></button>
             </div>
         </form>
+    </div>
+    <div class="library">
+        <header>
+            <img src="images/kisspng-key-chains-flower-video-image-television-5cf6b0e59c5149.5384532715596710136403-removebg-preview.png" alt="a chain of yellow fresh flowers vector">
+            <h1>My Library</h1>
+        </header>
+        <main>
+            <div class="card">
+                <h2>Prince of Town</h2>
+                <div class="rating-pages">
+                    <p><span><img src="images/star.png" alt="a yellow star" width=40></span> 5 Star</p>
+                    <p class="pagecount">300 pages</p>
+                </div>
+                <div class="reading-experience">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora dolorum repudiandae?
+                </div>
+                <div class="read">
+                    <label for="readCard">Read</label>
+                    <input type="checkbox" id="readCard" name="toggleRead">
+                </div>
+                <div class="by">
+                    by Prince
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 

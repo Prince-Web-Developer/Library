@@ -16,7 +16,6 @@ function Book(title, author, pages, isRead, rating, readExperience) {
     this.isRead = isRead
     this.rating = rating
     this.readExperience = readExperience
-    this.img = "images/book.jpg"
 }
 
 
@@ -29,6 +28,7 @@ function addBookToLibrary(book) {
 function modifySavedArray() {
     try {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
+        changeDisplay()
     }
     catch (error) {
         if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
@@ -94,3 +94,18 @@ document.querySelector("#read").addEventListener("change", () => {
     const fieldSet = document.querySelector("fieldset")
     fieldSet.disabled = !fieldSet.disabled
 })
+
+
+function changeDisplay(libraryDisplay,formDisplay){
+    const library = document.querySelector(".library")
+    const form = document.querySelector(".form")
+
+
+    library.style.display = libraryDisplay
+    form.style.display = formDisplay
+
+    if (libraryDisplay == "flex"){
+        // displayBooks()
+    }
+}
+
