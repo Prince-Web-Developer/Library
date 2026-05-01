@@ -63,6 +63,7 @@ document.querySelector("#addBook").addEventListener("submit", (e) => {
     if (title && author && pages && pages != NaN) {
         const newBook = new Book(title, author, pages, read, stars,readingExp)
         e.target.reset()
+        e.target.querySelector("fieldSet").disabled = true
         addBookToLibrary(newBook)
     }
     else {
