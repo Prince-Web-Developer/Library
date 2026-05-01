@@ -120,7 +120,7 @@ input:disabled, textarea:disabled{
     padding: 20px 0px;
 }
 
-button[type="submit"]{
+button{
     all: unset;
     position: relative;
     padding: 16px 32px;
@@ -130,28 +130,30 @@ button[type="submit"]{
     overflow: hidden;
 }
 
-button[type="submit"]::before{
+button::before{
     content: "Add";
     position: relative;
     z-index: 2;
 }
 
-button[type="submit"]::after{
+button::after{
     content: "";
     position: absolute;
     width: 140%;
+    z-index: 1;
     transition: all 1s;
-    height: 120%;
+    height: 100%;
     background-color: black;
     left: -10px;
-    bottom: -130%;
+    bottom: -100%;
 }
 
-button[type="submit"]:hover{
+button:hover{
     color: white;
+    cursor: pointer;
 }
 
-button[type="submit"]:hover::after{
+button:hover::after{
     bottom: 0%;
 }
 /* form end */
@@ -198,19 +200,21 @@ main{
     flex-wrap: wrap;
     justify-content: center;
     padding: 10px;
-    max-width: max(950px,80vw);
+    max-width: 80vw;
     gap: 20px;
 }
 
 .card{
+    max-width: 500px;
     width: max(280px,40%);
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    border: 1px solid black;
     background-color: white;
     padding: 20px;
     display: flex;
     font-size: clamp(0.8rem,0.8rem + 0.5vw,1.2rem);
     flex-direction: column;
     gap: 30px;
+    font-weight: bold;
 }
 
 .card h2,.by{
@@ -227,7 +231,6 @@ main{
     font-size: 0.8rem;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
 }
 
 .rating-pages p:first-of-type{
@@ -237,10 +240,25 @@ main{
 
 .reading-experience{
     line-height: 1.5;
+    font-weight: normal;
     height: calc(1.5rem * 5 + 10px);
     overflow: hidden;
 }
 
+.icon-tick{
+    background: url(images/greentick.avif);
+}
+
+.icon-cross{
+    background: url(images/red-cross.jpg);
+}
+
+.icon{
+    width: 40px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
 
 .read,.by{
     display: flex;
@@ -249,8 +267,43 @@ main{
 }
 
 .by{
-    font-size: inherit;
+    font-size: 0.8rem;
+    
     border-bottom: 0px;
 }
 
+.grey{
+    color: grey;
+}
+
+.centerText{
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.add-button{
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    justify-content: flex-end;
+}
+
+.add-button button{
+    background-color: black;
+    color: white;
+}
+
+.add-button button:hover{
+    color: black;
+}
+
+.add-button button::after{
+    background-color: white;
+}
 /* library end */

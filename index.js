@@ -2,7 +2,7 @@
 
 const existingLibrary = JSON.parse(localStorage.getItem("myLibrary"))
 let myLibrary = existingLibrary != null ? existingLibrary : []
-console.log(myLibrary);
+
 
 function Book(title, author, pages, isRead, rating, readExperience) {
     if (!new.target) {
@@ -28,7 +28,8 @@ function addBookToLibrary(book) {
 function modifySavedArray() {
     try {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
-        changeDisplay()
+        changeDisplay("flex","none")
+        displayBooks()
     }
     catch (error) {
         if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
@@ -45,26 +46,30 @@ document.querySelector("#addBook").addEventListener("submit", (e) => {
     e.preventDefault()
     const formData = new FormData(e.target);
 
-    
+
     const data = Object.fromEntries(formData);
 
     const title = data["title"]
     const author = data["author"]
     const pages = +data["pages"]
     const read = data["read"] == "on" ? true : false
-    const stars = data["rating"]
-    const readingExp = data["reading-experience"]
+    let stars = undefined
+    let readingExp = undefined
+    if (read) {
+        stars = data["rating"]
+        readingExp = data["reading-experience"]
+    }
 
-    if (title && author && pages && pages != NaN){
-        const newBook = new Book(title, author, pages, read, readingExp)
+    if (title && author && pages && pages != NaN) {
+        const newBook = new Book(title, author, pages, read, stars,readingExp)
+        e.target.reset()
         addBookToLibrary(newBook)
     }
-    else{
+    else {
         displayError("Fill Form Correctly")
     }
-
-
 })
+
 
 
 
@@ -84,7 +89,7 @@ function displayError(message) {
     errorContainer.style.height = "100px"
 }
 
-function hideError(){
+function hideError() {
     const errorContainer = document.querySelector(".error")
     errorContainer.style.height = "0px"
 }
@@ -96,16 +101,83 @@ document.querySelector("#read").addEventListener("change", () => {
 })
 
 
-function changeDisplay(libraryDisplay,formDisplay){
+function changeDisplay(libraryDisplay, formDisplay) {
     const library = document.querySelector(".library")
     const form = document.querySelector(".form")
 
 
     library.style.display = libraryDisplay
     form.style.display = formDisplay
-
-    if (libraryDisplay == "flex"){
-        // displayBooks()
-    }
 }
 
+
+function displayBooks(){
+    const main = document.querySelector("main")
+    if (myLibrary.length == 0){
+        const div = document.createElement("div")
+        div.innerText = "No Books Added"
+        div.classList.add("centerText")
+        main.appendChild(div)
+        return null
+    }
+    const template = cleanMain()
+    main.appendChild(template)
+    myLibrary.forEach((e,index) => {
+        const templateClone =  template.cloneNode(true)
+        templateClone.style.display = "flex"
+
+        templateClone.id = e.id
+
+        const readIcon = templateClone.querySelector(".icon")
+        const titleContainer = templateClone.firstElementChild
+        const starContainer = templateClone.querySelector(".idk")
+        const pageContainer = templateClone.querySelector(".pagecount")
+        const readingExperienceContainer = templateClone.querySelector(".reading-experience")
+        const authorContainer = templateClone.querySelector(".by")
+
+
+        titleContainer.innerText = e.title
+        pageContainer.innerText = `${e.pages} pages`
+        authorContainer.innerText = `by ${e.author}`
+
+        if(e.rating){
+            starContainer.textContent = e.rating
+        }
+        else{
+            starContainer.innerText = 'N/A'
+        }
+
+        if(e.readExperience){
+            readingExperienceContainer.innerText = e.readExperience
+        }
+        else if(!e.isRead){
+            readingExperienceContainer.innerText = "Not read yet"
+        }
+        else{
+            readingExperienceContainer.innerText = "N/A"
+            readingExperienceContainer.classList.add("grey")
+        }
+
+        if (e.isRead){
+            readIcon.classList.add("icon-tick")
+        }
+        else{
+            readIcon.classList.add("icon-cross")
+        }
+        main.appendChild(templateClone)
+    });
+}
+
+function cleanMain(){
+    const main = document.querySelector("main")
+    const template = main.firstElementChild
+    main.textContent = ""
+    return template
+}
+
+
+document.querySelector("#add-button-on-main").addEventListener("click",() => {
+    changeDisplay("none","flex")
+})
+
+displayBooks()

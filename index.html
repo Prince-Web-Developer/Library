@@ -45,7 +45,7 @@
                 <legend>Reading Experience</legend>
 
                 <div class="form-group" id="rating">
-                    <input type="number" name="rating" id="rate" min="0" max="5">
+                    <input type="number" step="0.1" name="rating" id="rate" min="0" max="5">
                     <label class="label" for="rate">out of 5</label>
                 </div>
 
@@ -62,25 +62,30 @@
     </div>
     <div class="library">
         <header>
-            <img src="images/kisspng-key-chains-flower-video-image-television-5cf6b0e59c5149.5384532715596710136403-removebg-preview.png" alt="a chain of yellow fresh flowers vector">
+            <img src="images/kisspng-key-chains-flower-video-image-television-5cf6b0e59c5149.5384532715596710136403-removebg-preview.png"
+                alt="a chain of yellow fresh flowers vector">
             <h1>My Library</h1>
         </header>
+        <div class="add-button">
+            <button aria-label="Add Book" id="add-button-on-main"></button>
+        </div>
         <main>
-            <div class="card">
-                <h2>Prince of Town</h2>
+            <div class="card" style="display: none;">
+                <h2></h2>
                 <div class="rating-pages">
-                    <p><span><img src="images/star.png" alt="a yellow star" width=40></span> 5 Star</p>
-                    <p class="pagecount">300 pages</p>
+                    <p class="stars"><span><img src="images/star.png" alt="a yellow star" width=40></span><span
+                            class="idk"></span></p>
+                    <p class="pagecount"></p>
                 </div>
                 <div class="reading-experience">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora dolorum repudiandae?
+
                 </div>
                 <div class="read">
-                    <label for="readCard">Read</label>
-                    <input type="checkbox" id="readCard" name="toggleRead">
+                    <p>Read</p>
+                    <p class="icon"></p>
                 </div>
                 <div class="by">
-                    by Prince
+
                 </div>
             </div>
         </main>
