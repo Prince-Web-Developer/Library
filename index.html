@@ -55,8 +55,12 @@
                 </div>
             </fieldset>
 
+            <div class="form-group">
+                <input type="text" name="exisitingValue" id="exisitingValue" hidden>
+            </div>
+
             <div class="submit">
-                <button type="submit" aria-label="Add"></button>
+                <button type="submit" class="button" aria-label="Add"></button>
             </div>
         </form>
     </div>
@@ -67,11 +71,12 @@
             <h1>My Library</h1>
         </header>
         <div class="add-button">
-            <button aria-label="Add Book" id="add-button-on-main"></button>
+            <button aria-label="Add Book" class="button" id="add-button-on-main"></button>
         </div>
         <main>
-            <div class="card" style="display: none;">
+            <div tabindex="0" class="card" style="display: none;">
                 <h2></h2>
+                <div id="edit"><button class="editbtn" onclick="makeFormHavePreviousValue(event)">Edit</button></div>
                 <div class="rating-pages">
                     <p class="stars"><span><img src="images/star.png" alt="a yellow star" width=40></span><span
                             class="idk"></span></p>

@@ -28,7 +28,7 @@ function addBookToLibrary(book) {
 function modifySavedArray() {
     try {
         localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
-        changeDisplay("flex","none")
+        changeDisplay("flex", "none")
         displayBooks()
     }
     catch (error) {
@@ -60,16 +60,36 @@ document.querySelector("#addBook").addEventListener("submit", (e) => {
         readingExp = data["reading-experience"]
     }
 
+    const isWeNeedToEditBook = data["exisitingValue"]
+
+
     if (title && author && pages && pages != NaN) {
-        const newBook = new Book(title, author, pages, read, stars,readingExp)
-        e.target.reset()
+
+        if (isWeNeedToEditBook || isWeNeedToEditBook != "") {
+            const index = FindElementWithId(isWeNeedToEditBook)
+            myLibrary[index].title = title
+            myLibrary[index].author = author
+            myLibrary[index].pages = pages
+            myLibrary[index].isRead = read
+            myLibrary[index].rating = stars
+            myLibrary[index].readExperience = readingExp
+            modifySavedArray()
+        }
+        else {
+            const newBook = new Book(title, author, pages, read, stars, readingExp)
+            addBookToLibrary(newBook)
+        }
         e.target.querySelector("fieldSet").disabled = true
-        addBookToLibrary(newBook)
+        e.target.reset()
     }
     else {
         displayError("Fill Form Correctly")
     }
 })
+
+function FindElementWithId(id) {
+    return myLibrary.findIndex(item => item.id == id)
+}
 
 
 
@@ -112,9 +132,59 @@ function changeDisplay(libraryDisplay, formDisplay) {
 }
 
 
-function displayBooks(){
+function makeFormHavePreviousValue(e) {
+    const bookId = e.target.id
+    const element = myLibrary[FindElementWithId(bookId)]
+    if (element) {
+        fillForm(element)
+        changeDisplay("none", "flex")
+    }
+    else {
+        displayError("Item Not Found")
+    }
+
+}
+
+function fillForm(ele) {
+    const form = document.querySelector("form")
+
+    const titleInputField = form.querySelector("#title")
+    titleInputField.value = ele.title
+
+    const authorInputField = form.querySelector("#author")
+    authorInputField.value = ele.author
+
+    const pagesInputField = form.querySelector("#pages")
+    pagesInputField.value = ele.pages
+
+    const isRead = ele.isRead
+    const readCheckBox = form.querySelector("#read")
+    readCheckBox.checked = isRead
+
+
+    const fieldSet = form.querySelector("fieldset")
+    fieldSet.disabled = !isRead
+
+    const rateInputField = form.querySelector("#rate")
+    const reviewInputField = form.querySelector("#desc")
+
+    const rating = ele.rating
+    if (rating) {
+        rateInputField.value = rating
+    }
+
+    const review = ele.readExperience
+    if (review) {
+        reviewInputField.value = review
+    }
+
+    const bookId = form.querySelector("#exisitingValue")
+    bookId.value = ele.id
+}
+
+function displayBooks() {
     const main = document.querySelector("main")
-    if (myLibrary.length == 0){
+    if (myLibrary.length == 0) {
         const div = document.createElement("div")
         div.innerText = "No Books Added"
         div.classList.add("centerText")
@@ -123,11 +193,12 @@ function displayBooks(){
     }
     const template = cleanMain()
     main.appendChild(template)
-    myLibrary.forEach((e,index) => {
-        const templateClone =  template.cloneNode(true)
+    myLibrary.forEach((e, index) => {
+        const templateClone = template.cloneNode(true)
         templateClone.style.display = "flex"
 
-        templateClone.id = e.id
+        const editButton = templateClone.querySelector(".editbtn")
+        editButton.id = e.id
 
         const readIcon = templateClone.querySelector(".icon")
         const titleContainer = templateClone.firstElementChild
@@ -141,35 +212,35 @@ function displayBooks(){
         pageContainer.innerText = `${e.pages} pages`
         authorContainer.innerText = `by ${e.author}`
 
-        if(e.rating){
+        if (e.rating) {
             starContainer.textContent = e.rating
         }
-        else{
+        else {
             starContainer.innerText = 'N/A'
         }
 
-        if(e.readExperience){
+        if (e.readExperience) {
             readingExperienceContainer.innerText = e.readExperience
         }
-        else if(!e.isRead){
+        else if (!e.isRead) {
             readingExperienceContainer.innerText = "Not read yet"
         }
-        else{
+        else {
             readingExperienceContainer.innerText = "N/A"
             readingExperienceContainer.classList.add("grey")
         }
 
-        if (e.isRead){
+        if (e.isRead) {
             readIcon.classList.add("icon-tick")
         }
-        else{
+        else {
             readIcon.classList.add("icon-cross")
         }
         main.appendChild(templateClone)
     });
 }
 
-function cleanMain(){
+function cleanMain() {
     const main = document.querySelector("main")
     const template = main.firstElementChild
     main.textContent = ""
@@ -177,8 +248,8 @@ function cleanMain(){
 }
 
 
-document.querySelector("#add-button-on-main").addEventListener("click",() => {
-    changeDisplay("none","flex")
+document.querySelector("#add-button-on-main").addEventListener("click", () => {
+    changeDisplay("none", "flex")
 })
 
 displayBooks()

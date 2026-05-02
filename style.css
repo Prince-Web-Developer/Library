@@ -121,7 +121,7 @@ input:disabled, textarea:disabled{
     padding: 20px 0px;
 }
 
-button{
+.button{
     all: unset;
     position: relative;
     padding: 16px 32px;
@@ -131,13 +131,13 @@ button{
     overflow: hidden;
 }
 
-button::before{
+.button::before{
     content: "Add";
     position: relative;
     z-index: 2;
 }
 
-button::after{
+.button::after{
     content: "";
     position: absolute;
     width: 140%;
@@ -149,12 +149,12 @@ button::after{
     bottom: -100%;
 }
 
-button:hover{
+.button:hover{
     color: white;
     cursor: pointer;
 }
 
-button:hover::after{
+.button:hover::after{
     bottom: 0%;
 }
 /* form end */
@@ -216,6 +216,7 @@ main{
     flex-direction: column;
     gap: 30px;
     font-weight: bold;
+    position: relative;
 }
 
 .card h2,.by{
@@ -242,8 +243,8 @@ main{
 .reading-experience{
     line-height: 1.5;
     font-weight: normal;
-    height: calc(1.5rem * 5 + 10px);
-    overflow: hidden;
+    height: calc((1.5rem * 5) + 10px);
+    overflow-x: hidden;
 }
 
 .icon-tick{
@@ -307,4 +308,46 @@ main{
 .add-button button::after{
     background-color: white;
 }
+
+.card::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.5s;
+    background-color: #eee;
+    width: 100%;
+    height: 100%;
+    content: "";
+}
+
+#edit{
+    position: absolute;
+    width: 100%;
+    display: none;
+    z-index: 1;
+    opacity: 0;
+    top: 50%;
+    justify-content: center;
+}
+
+#edit button{
+    all: unset;
+    padding: 16px 36px;
+    border: 1px solid black;
+    background-color: hotpink;
+    color: white;
+}
+
+.card:hover::after,.card:focus:after{
+    opacity: 1;
+}
+
+.card:hover #edit, .card:focus #edit{
+    opacity: 1;
+    display: flex;
+}
+
+
+
 /* library end */
