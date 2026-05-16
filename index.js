@@ -4,42 +4,42 @@ const existingLibrary = JSON.parse(localStorage.getItem("myLibrary"))
 let myLibrary = existingLibrary != null ? existingLibrary : []
 
 
-function Book(title, author, pages, isRead, rating, readExperience) {
-    if (!new.target) {
-        throw Error("new keyword must be used to Initialize book constructor")
+class Book {
+    constructor(title, author, pages, isRead, rating, readExperience) {
+        this.id = crypto.randomUUID()
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.isRead = isRead
+        this.rating = rating
+        this.readExperience = readExperience
     }
 
-    this.id = crypto.randomUUID()
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.isRead = isRead
-    this.rating = rating
-    this.readExperience = readExperience
-}
-
-
-function addBookToLibrary(book) {
-    myLibrary.push(book)
-    modifySavedArray()
-}
-
-
-function modifySavedArray() {
-    try {
-        localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
-        changeDisplay("flex", "none")
-        displayBooks()
+    addBookToLibrary() {
+        myLibrary.push(this)
+        this.modifySavedArray()
     }
-    catch (error) {
-        if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-            displayError("Storage is full. delete some books")
+
+
+    modifySavedArray() {
+        try {
+            localStorage.setItem("myLibrary", JSON.stringify(myLibrary))
+            changeDisplay("flex", "none")
+            displayBooks()
         }
-        else {
-            displayError("An error occur")
+        catch (error) {
+            if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                displayError("Storage is full. delete some books")
+            }
+            else {
+                displayError("An error occur")
+            }
         }
     }
 }
+
+
+
 
 document.querySelector("#addBook").addEventListener("submit", (e) => {
     hideError()
@@ -67,18 +67,10 @@ document.querySelector("#addBook").addEventListener("submit", (e) => {
 
         if (isWeNeedToEditBook || isWeNeedToEditBook != "") {
             const index = FindElementWithId(isWeNeedToEditBook)
-            myLibrary[index].title = title
-            myLibrary[index].author = author
-            myLibrary[index].pages = pages
-            myLibrary[index].isRead = read
-            myLibrary[index].rating = stars
-            myLibrary[index].readExperience = readingExp
-            modifySavedArray()
+            myLibrary.splice(index, 1)
         }
-        else {
-            const newBook = new Book(title, author, pages, read, stars, readingExp)
-            addBookToLibrary(newBook)
-        }
+        const newBook = new Book(title, author, pages, read, stars, readingExp)
+        newBook.addBookToLibrary()
         e.target.querySelector("fieldSet").disabled = true
         e.target.reset()
     }
@@ -252,4 +244,4 @@ document.querySelector("#add-button-on-main").addEventListener("click", () => {
     changeDisplay("none", "flex")
 })
 
-displayBooks()
+window.displayBooks()
